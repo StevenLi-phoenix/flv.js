@@ -60,6 +60,19 @@
         var checkBoxFields = ['isLive', 'withCredentials', 'hasAudio', 'hasVideo'];
         var streamURL, mediaSourceURL;
 
+        function GetRequest() {
+            const url = location.search;
+            let theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                let str = url.substr(1);
+                strs = str.split("&");
+                for(let i = 0; i < strs.length; i ++) {
+                    theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+
         function flv_load() {
             console.log('isSupported: ' + flvjs.isSupported());
             if (mediaSourceURL.className === '') {
@@ -217,6 +230,20 @@
             showVersion();
             flv_load();
         });
+
+        function strechKeyFromUrl(){
+            //get url links from url
+            let Request_url = new Object();
+            Request_url = GetRequest();
+            if(Request_url.hasOwnProperty("url")){
+                document.getElementById("sURL").value = Request_url.url;
+                console.log(Request_url.url)
+            }
+            else if(Request_url.hasOwnProperty("key")){
+                document.getElementById("sURL").value = Request_url.key;
+                console.log(Request_url.key)
+            }
+        }
     </script>
     
 </body>
